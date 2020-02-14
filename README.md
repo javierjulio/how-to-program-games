@@ -1,3 +1,3 @@
 # How To Program Games
 
-These are my files for [the How To Program Games course on Udemy](https://www.udemy.com/course/how-to-program-games).
+These are my completed games for [the How To Program Games course](https://www.udemy.com/course/how-to-program-games) on Udemy. I've just finished the first which is a Brick Breaking game.
