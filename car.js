@@ -1,6 +1,3 @@
-var carImage = document.createElement("img");
-var carImageLoaded = false;
-
 var carX = 75;
 var carY = 75;
 var carAngle = 0;
@@ -10,13 +7,6 @@ const GROUNDSPEED_DECAY_MULTIPLIER = 0.94;
 const DRIVE_POWER = 0.5;
 const REVERSE_POWER = 0.2;
 const TURN_RATE = 0.07;
-
-function carImageLoad() {
-  carImage.onload = function() {
-    carImageLoaded = true;
-  }
-  carImage.src = "player1car.png";
-}
 
 function carReset() {
   for (var row = 0; row < TRACK_ROWS; row++) {
@@ -53,7 +43,5 @@ function carMove() {
 }
 
 function drawCar() {
-  if (carImageLoaded) {
-    drawBitmapCenteredWithRotation(carImage, carX, carY, carAngle);
-  }
+  drawBitmapCenteredWithRotation(carImage, carX, carY, carAngle);
 }
