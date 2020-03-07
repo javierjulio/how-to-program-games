@@ -1,5 +1,8 @@
 var canvas, canvasContext;
 
+var blueCar = new Car();
+var greenCar = new Car();
+
 window.onload = function() {
   canvas = document.getElementById('gameCanvas');
   canvasContext = canvas.getContext('2d');
@@ -15,7 +18,8 @@ function startGame() {
   setInterval(updateAll, 1000/framesPerSecond);
 
   setupInput();
-  carReset();
+  greenCar.reset(car2Image);
+  blueCar.reset(carImage);
 }
 
 function updateAll() {
@@ -24,11 +28,12 @@ function updateAll() {
 }
 
 function moveAll() {
-  carMove();
-  carTrackHandling();
+  greenCar.move();
+  blueCar.move();
 }
 
 function drawAll() {
   drawTracks();
-  drawCar();
+  greenCar.draw();
+  blueCar.draw();
 }

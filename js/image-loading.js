@@ -1,6 +1,7 @@
 var trackImages = [];
 
 var carImage = document.createElement("img");
+var car2Image = document.createElement("img");
 var roadImage = document.createElement("img");
 var wallImage = document.createElement("img");
 var flagImage = document.createElement("img");
@@ -24,6 +25,7 @@ function loadImage(image, path) {
 function loadImages() {
   const images = [
     { image: carImage, path: "images/player1car.png" },
+    { image: car2Image, path: "images/player2car.png" },
     { trackType: TRACK_ROAD, path: "images/track_road.png" },
     { trackType: TRACK_WALL, path: "images/track_wall.png" },
     { trackType: TRACK_FLAG, path: "images/track_flag.png" },
