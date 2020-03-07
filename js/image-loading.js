@@ -1,3 +1,5 @@
+var trackImages = [];
+
 var carImage = document.createElement("img");
 var roadImage = document.createElement("img");
 var wallImage = document.createElement("img");
@@ -22,16 +24,21 @@ function loadImage(image, path) {
 function loadImages() {
   const images = [
     { image: carImage, path: "images/player1car.png" },
-    { image: roadImage, path: "images/track_road.png" },
-    { image: wallImage, path: "images/track_wall.png" },
-    { image: flagImage, path: "images/track_flag.png" },
-    { image: goalImage, path: "images/track_goal.png" },
-    { image: treeImage, path: "images/track_tree.png" },
+    { trackType: TRACK_ROAD, path: "images/track_road.png" },
+    { trackType: TRACK_WALL, path: "images/track_wall.png" },
+    { trackType: TRACK_FLAG, path: "images/track_flag.png" },
+    { trackType: TRACK_GOAL, path: "images/track_goal.png" },
+    { trackType: TRACK_TREE, path: "images/track_tree.png" },
   ]
 
   imagesToLoad = images.length;
 
   for (var i = 0; i < images.length; i++) {
-    loadImage(images[i].image, images[i].path)
+    if (images[i].image) {
+      loadImage(images[i].image, images[i].path)
+    } else {
+      trackImages[images[i].trackType] = document.createElement("img");
+      loadImage(trackImages[images[i].trackType], images[i].path)
+    }
   }
 }
