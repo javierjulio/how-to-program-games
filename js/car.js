@@ -6,7 +6,8 @@ var carSpeed = 0;
 const GROUNDSPEED_DECAY_MULTIPLIER = 0.94;
 const DRIVE_POWER = 0.5;
 const REVERSE_POWER = 0.2;
-const TURN_RATE = 0.07;
+const TURN_RATE = 0.06;
+const MIN_SPEED_TO_TURN = 0.5;
 
 function carReset() {
   for (var row = 0; row < TRACK_ROWS; row++) {
@@ -31,11 +32,14 @@ function carMove() {
   if (keyHeld_Reverse) {
     carSpeed -= REVERSE_POWER;
   }
-  if (keyHeld_TurnLeft) {
-    carAngle -= TURN_RATE;
-  }
-  if (keyHeld_TurnRight) {
-    carAngle += TURN_RATE;
+
+  if (Math.abs(carSpeed) > MIN_SPEED_TO_TURN) {
+    if (keyHeld_TurnLeft) {
+      carAngle -= TURN_RATE;
+    }
+    if (keyHeld_TurnRight) {
+      carAngle += TURN_RATE;
+    }
   }
 
   carX += Math.cos(carAngle) * carSpeed;
