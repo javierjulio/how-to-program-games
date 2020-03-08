@@ -11,6 +11,8 @@ class Car {
     this.angle = angle;
     this.speed = speed;
 
+    this.name = "Untitled Car";
+
     this.keyHeld_Gas = false;
     this.keyHeld_Reverse = false;
     this.keyHeld_TurnLeft = false;
@@ -22,8 +24,10 @@ class Car {
     this.controlKeyRight = 0;
   }
 
-  reset(image) {
+  reset(image, name) {
+    this.name = name;
     this.image = image;
+    this.speed = 0;
     for (var row = 0; row < TRACK_ROWS; row++) {
       for (var col = 0; col < TRACK_COLS; col++) {
         var arrayIndex = rowColToArrayIndex(col, row);
