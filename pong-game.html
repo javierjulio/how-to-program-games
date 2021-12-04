@@ -128,10 +128,11 @@ body {
     if (ballY < 0 || ballY > canvas.height) {
       ballSpeedY = -ballSpeedY;
     }
-
   }
 
   function drawEverything() {
+    canvasContext.font = "20px system-ui"
+
     canvasContext.fillStyle = 'black';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -177,9 +178,6 @@ body {
   }
 
   main(); // Start the cycle
-
-
 </script>
-
 </body>
 </html>
