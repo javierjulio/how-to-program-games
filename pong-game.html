@@ -9,17 +9,18 @@
 <canvas id="gameCanvas" class="game-canvas" width="800" height="600"></canvas>
 
 <script>
+  const INITIAL_SPEED = 3;
+  const WINNING_SCORE = 3;
+
   var canvas = document.getElementById("gameCanvas");
   var canvasContext = canvas.getContext("2d");
   var ballX = 50;
-  var ballSpeedX = 10;
   var ballY = 50;
-  var ballSpeedY = 4;
+  var ballSpeedX = INITIAL_SPEED;
+  var ballSpeedY = INITIAL_SPEED;
 
   var player1Score = 0;
   var player2Score = 0;
-
-  const WINNING_SCORE = 3;
 
   var paddleUserY = 250;
   var paddleComputerY = 250;
@@ -65,7 +66,8 @@
       showingWinScreen = false;
     }
 
-    ballSpeedX = -ballSpeedX;
+    ballSpeedX = -INITIAL_SPEED;
+    ballSpeedY = INITIAL_SPEED;
     ballX = canvas.width / 2;
     ballY = canvas.height / 2;
   }
