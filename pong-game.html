@@ -14,9 +14,9 @@
 
   var canvas = document.getElementById("gameCanvas");
   var canvasContext = canvas.getContext("2d");
-  var ballX = 50;
-  var ballY = 50;
+  var ballX = canvas.width / 2;
   var ballSpeedX = INITIAL_SPEED;
+  var ballY = canvas.height / 2;
   var ballSpeedY = INITIAL_SPEED;
 
   var player1Score = 0;
