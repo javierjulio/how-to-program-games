@@ -1,0 +1,174 @@
+<html>
+<style>
+.game-canvas {
+  cursor: none;
+}
+</style>
+<body>
+
+<canvas id="gameCanvas" class="game-canvas" width="800" height="600"></canvas>
+
+<script>
+  var canvas = document.getElementById("gameCanvas");
+  var canvasContext = canvas.getContext("2d");
+  var ballX = 50;
+  var ballSpeedX = 10;
+  var ballY = 50;
+  var ballSpeedY = 4;
+
+  var player1Score = 0;
+  var player2Score = 0;
+
+  const WINNING_SCORE = 3;
+
+  var paddleUserY = 250;
+  var paddleComputerY = 250;
+  const PADDLE_HEIGHT = 100;
+  const PADDLE_THICKNESS = 10;
+
+  var showingWinScreen = false;
+
+  canvas.addEventListener('mousemove', function(event) {
+    var mousePosition = calculateMousePosition(event);
+    paddleUserY = mousePosition.y - (PADDLE_HEIGHT / 2);
+  });
+
+  canvas.addEventListener('mousedown', function(event) {
+    if (showingWinScreen) {
+      player1Score = 0;
+      player2Score = 0;
+      showingWinScreen = false;
+    }
+  });
+
+  function update() {
+    moveEverything();
+    drawEverything();
+  }
+
+  function calculateMousePosition(event) {
+    var rect = canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var mouseX = event.clientX - rect.left - root.scrollLeft;
+    var mouseY = event.clientY - rect.top - root.scrollTop;
+    return {
+      x: mouseX,
+      y: mouseY
+    }
+  }
+
+  function ballReset() {
+    if (player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
+      showingWinScreen = true;
+    }
+    else {
+      showingWinScreen = false;
+    }
+
+    ballSpeedX = -ballSpeedX;
+    ballX = canvas.width / 2;
+    ballY = canvas.height / 2;
+  }
+
+  function computerMovement() {
+    var paddleComputerYCenter = paddleComputerY + (PADDLE_HEIGHT / 2);
+    if (paddleComputerYCenter < ballY-35) {
+      paddleComputerY += 6;
+    }
+    else if (paddleComputerYCenter > ballY+35) {
+      paddleComputerY -= 6;
+    }
+  }
+
+  function moveEverything() {
+    if (showingWinScreen) {
+      return;
+    }
+
+    computerMovement();
+
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+
+    if (ballX < 0) {
+      if (ballY > paddleUserY && ballY < paddleUserY+PADDLE_HEIGHT) {
+        ballSpeedX = -ballSpeedX;
+        var deltaY = ballY - (paddleUserY + PADDLE_HEIGHT / 2);
+        ballSpeedY = deltaY * 0.35;
+      }
+      else {
+        player2Score += 1;
+        ballReset();
+      }
+    }
+
+    if (ballX > canvas.width ) {
+      if (ballY > paddleComputerY && ballY < paddleComputerY+PADDLE_HEIGHT) {
+        ballSpeedX = -ballSpeedX;
+        var deltaY = ballY - (paddleComputerY + PADDLE_HEIGHT / 2);
+        ballSpeedY = deltaY * 0.35;
+      }
+      else {
+        player1Score += 1;
+        ballReset();
+      }
+    }
+
+    if (ballY < 0 || ballY > canvas.height) {
+      ballSpeedY = -ballSpeedY;
+    }
+
+  }
+
+  function drawEverything() {
+    canvasContext.fillStyle = 'black';
+    canvasContext.fillRect(0, 0, canvas.width, canvas.height);
+
+    if (showingWinScreen) {
+      canvasContext.fillStyle = 'white';
+
+      if (player1Score >= WINNING_SCORE) {
+        canvasContext.fillText("Player 1 Wins!", 350, 200);
+      }
+      else if (player2Score >= WINNING_SCORE) {
+        canvasContext.fillText("Computer 1 Wins!", 350, 200);
+      }
+
+      canvasContext.fillText("Click to continue.", 350, 500);
+      return;
+    }
+
+    for (var i = 10; i < canvas.height; i += 40) {
+      canvasContext.fillStyle = 'white';
+      canvasContext.fillRect(canvas.width/2 - 1, i, 2, 20);
+    }
+
+    canvasContext.fillStyle = 'white';
+    canvasContext.fillRect(10, paddleUserY, PADDLE_THICKNESS, PADDLE_HEIGHT);
+
+    canvasContext.fillStyle = 'white';
+    canvasContext.fillRect(canvas.width - 20, paddleComputerY, PADDLE_THICKNESS, PADDLE_HEIGHT);
+
+    canvasContext.fillStyle = 'white';
+    canvasContext.beginPath();
+    canvasContext.arc(ballX, ballY, 10, 0, Math.PI*2, true);
+    canvasContext.fill();
+
+    canvasContext.fillText(player1Score, 100, 100);
+    canvasContext.fillText(player2Score, canvas.width - 100, 100);
+  }
+
+  function main() {
+    window.requestAnimationFrame( main );
+
+    // Your main loop contents.
+    update();
+  }
+
+  main(); // Start the cycle
+
+
+</script>
+
+</body>
+</html>
